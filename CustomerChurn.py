@@ -35,7 +35,21 @@ print(df.describe())
 # Plotting the datasets
 gender_Counts = df['gender'].value_counts()
 # Unstacked bar chart.
-gender_Counts.plot(kind='bar',color = ['lightblue','purple'])
+ax = gender_Counts.plot(kind='bar',color = ['lightblue','purple'])
+
+
+# Labelling the bar chart
+for i, gender in enumerate(gender_Counts):
+    ax.text(i,
+            gender + 1,
+            str(gender),
+            ha = "center",
+            va = "bottom")
+    
+plt.title("Gender Counts in Total")
+plt.xlabel("Male/Female")
+plt.ylabel("Total # of Gender")
+plt.tight_layout()
 
 # Stacked Bar chart.
 churn__gender_counts = df.groupby(['gender','Churn']).size().unstack(fill_value = 0)
@@ -61,21 +75,22 @@ plt.ylabel('Gender & Churn Count')
 plt.xticks(rotation = 0)
 
 # Creating a Pie Chart.
-plt.figure(figsize=(10,10))
+plt.figure(figsize=(8,6))
 churnss = df['Churn'].value_counts()
 plt.pie(churnss, # the datas that are being evaluated.
         labels= churnss.index, # Labels of the percentage data
         autopct='%1.1f%%',# Helps get the percentage
         colors= ['red', 'yellow'],
         startangle=90)
-plt.title("gender Distribution")
-plt.axis('equal')
+plt.title("Gender Distribution")
+plt.axis('Equal')
 
 # Creating a Scatter plot
-plt.figure(figsize=(100,100))
+plt.figure(figsize=(8,6))
 plt.scatter(df['MonthlyCharges'],df['tenure'], color = 'red', marker= 'o')
 plt.title('Tenure and Monthly Charge')
 plt.xlabel('monthlycharge')
 plt.ylabel('tenure')
+plt.tight_layout()
 
 plt.show()
